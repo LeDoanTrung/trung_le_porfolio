@@ -1,33 +1,57 @@
-# Portfolio (2025)
+# Trung Le Portfolio
 
-Personal portfolio site: project case studies, lightweight 3D and shader demos, bilingual copy (English and German).
+Personal portfolio site for Trung Le, an Automation Test Engineer focused on test automation, software quality management, and reliable QA processes.
 
-Built with **Vue 3**, **TypeScript**, and **Vite**. Motion via **GSAP** and **Lenis**, 3D via **three.js**, audio via **Howler**. GLSL is compiled through **vite-plugin-glsl**.
+This portfolio presents my QA automation background, technical skills, selected automation frameworks, project experience, and contact links.
+
+## QA Technical Focus
+
+- **UI Automation**: Playwright, Selenium WebDriver, Appium, Robot Framework
+- **API Testing**: Postman, RestSharp, Playwright API testing
+- **Languages**: TypeScript, JavaScript, Python, C#, Java, SQL
+- **Frameworks & Libraries**: NUnit, SpecFlow, TestNG, Maven
+- **CI/CD & Tools**: Azure DevOps, AWS, Git, Jira, GitHub Copilot
+- **Testing Practices**: regression testing, accessibility testing, test design, test case creation, defect tracking, Agile testing
+
+## Career Direction
+
+With significant enthusiasm in test automation and software quality management, I am passionate about exploring and implementing new technologies to enhance software efficiency and quality.
+
+My career goal is to advance in QA automation and progress toward a fullstack QA role to contribute comprehensively to product quality and delivery.
 
 ## Scripts
 
-| Command        | Description                          |
-| -------------- | ------------------------------------ |
-| `npm run dev`   | Dev server on port **3000** (`strictPort`) |
-| `npm run build` | `vue-tsc` then production bundle to `dist/` |
-| `npm run preview` | Serve the production build locally |
-| `npm run typecheck` | Typecheck only (`vue-tsc -b`) |
+| Command             | Description                                 |
+| ------------------- | ------------------------------------------- |
+| `npm run dev`       | Start the local dev server on port **3000** |
+| `npm run build`     | Typecheck and create the production build   |
+| `npm run preview`   | Serve the production build locally          |
+| `npm run typecheck` | Typecheck only (`vue-tsc -b`)               |
 
 ## Content
 
-- **Projects**: `src/content/projects/{en,de}/<slug>.ts` — copy, tags, media, links. Slugs must align with `projectIds` in `src/content/projects/index.ts`.
-- **Previews / listing**: `src/content/projects/previews/`.
-- **Tags**: variants and labels live in `src/components/tagVariants.ts` (used by `Tag.vue` and content types).
+- **Main profile copy**: `src/i18n/messages/namespaces/common/en.json`
+- **Hero name**: `src/features/home/components/Hero.vue`
+- **Profile details box**: `src/features/home/components/BoxDetails.vue`
+- **Social links**: `src/content/social.ts`
+- **SEO metadata**: `index.html`
+- **Project details**: `src/content/projects/{en,de}/<slug>.ts`
+- **Project previews**: `src/content/projects/previews/`
+- **Tags**: `src/components/tagVariants.ts`
 
-## Stack (high level)
+## Deployment Notes
 
-- Vue 3 (`<script setup>`), SCSS with shared mixins (`src/assets/styles/`)
-- i18n helpers under `src/i18n/`
-- WebGL / GLSL under `src/three/` where applicable
+Before deploying, update the placeholder domain in `index.html`:
+
+```html
+https://your-domain.com/
+```
+
+Replace it with the production domain used for the portfolio.
 
 ## Credits & Attribution
 
-This project was created and designed by David Heckhoff.
+This project was originally created and designed by David Heckhoff.
 
 If you use this project or substantial parts of its source code as a base for your own portfolio or work, attribution must be preserved.
 
@@ -38,6 +62,6 @@ Please keep:
 - a visible reference to the original project/repository in derivative works
 
 Original portfolio:
--> https://david-hckh.com
+https://david-hckh.com
 
 Commercial reuse or redistribution of substantial portions of this project without permission is prohibited.

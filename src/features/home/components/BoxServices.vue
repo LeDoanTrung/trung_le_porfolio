@@ -107,23 +107,28 @@ const handleTimelineCreated = (timeline: gsap.core.Timeline, delay: number) => {
 };
 
 const SERVICES_EN = [
-  { name: "Three.js & WebGL" },
-  { name: "Node.js & WebSockets" },
-  { name: "React & Vue" },
-  { name: "Kubernetes & Redis" },
-  { name: "Real-time Multiplayer" },
+  { name: "Playwright & TypeScript" },
+  { name: "Selenium WebDriver" },
+  { name: "Robot Framework & Python" },
+  { name: "API Testing & Postman" },
+  { name: "Azure DevOps & CI/CD" },
 ] as const satisfies { name: string }[];
 
-const SERVICES_DE = [
-  { name: "Three.js & WebGL" },
-  { name: "Node.js & WebSockets" },
-  { name: "React & Vue" },
-  { name: "Kubernetes & Redis" },
-  { name: "Echtzeit-Mehrspieler" },
+const SERVICES_VN = [
+  { name: "Playwright & TypeScript" },
+  { name: "Selenium WebDriver" },
+  { name: "Robot Framework & Python" },
+  { name: "API Testing & Postman" },
+  { name: "Azure DevOps & CI/CD" },
+] as const satisfies { name: string }[];
+
+const CERTIFICATES = [
+  { name: "ISTQB Foundation Level" },
+  { name: "IELTS 6.5" },
 ] as const satisfies { name: string }[];
 
 const services = computed(() => {
-  return locale.value === "en" ? SERVICES_EN : SERVICES_DE;
+  return locale.value === "vn" ? SERVICES_VN : SERVICES_EN;
 });
 </script>
 
@@ -149,6 +154,28 @@ const services = computed(() => {
                 @timeline:created="(tl: gsap.core.Timeline) => handleTimelineCreated(tl, 0.15 + index * 0.1)"
               />
             </p>
+          </div>
+        </div>
+        <div class="box-services-section">
+          <div class="box-services-subtitle">
+            <AppearingText
+              :text="t('certificates')"
+              :steps="1"
+              :duration="0.35"
+              @timeline:created="(tl: gsap.core.Timeline) => handleTimelineCreated(tl, 0.65)"
+            />
+          </div>
+          <div class="box-services-list">
+            <div class="box-services-list-item" v-for="(certificate, index) in CERTIFICATES" :key="certificate.name">
+              <p class="box-services-list-item-name">
+                <AppearingText
+                  :text="certificate.name"
+                  :steps="1"
+                  :duration="0.35"
+                  @timeline:created="(tl: gsap.core.Timeline) => handleTimelineCreated(tl, 0.75 + index * 0.1)"
+                />
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -267,6 +294,27 @@ const services = computed(() => {
           font-size: var(--font-size-lg);
         }
       }
+    }
+  }
+
+  &-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-top: var(--space-xs);
+    border-top: var(--stroke-sm) solid var(--color-cyan-400);
+  }
+
+  &-subtitle {
+    font-size: var(--font-size-md);
+    font-weight: 700;
+
+    @include mixins.landscape {
+      font-size: var(--font-size-sm);
+    }
+
+    @include mixins.landscape-large {
+      font-size: var(--font-size-lg);
     }
   }
 
