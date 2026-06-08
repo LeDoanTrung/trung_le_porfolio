@@ -19,6 +19,8 @@ const setup = ({
   contentDescription,
   tlServices,
   contentServices,
+  tlCertificates,
+  contentCertificates,
   tlDetails,
   contentDetails,
   contentProgressCount,
@@ -28,6 +30,8 @@ const setup = ({
   contentDescription: HTMLDivElement;
   tlServices: gsap.core.Timeline;
   contentServices: HTMLDivElement;
+  tlCertificates: gsap.core.Timeline;
+  contentCertificates: HTMLDivElement;
   tlDetails: gsap.core.Timeline;
   contentDetails: HTMLDivElement;
   contentProgressCount: HTMLDivElement;
@@ -40,6 +44,8 @@ const setup = ({
     contentDescription,
     tlServices,
     contentServices,
+    tlCertificates,
+    contentCertificates,
     tlDetails,
     contentDetails,
     contentProgressCount,
@@ -184,6 +190,8 @@ const setupSectionsAnimation = ({
   contentDescription,
   tlServices,
   contentServices,
+  tlCertificates,
+  contentCertificates,
   tlDetails,
   contentDetails,
   contentProgressCount,
@@ -191,10 +199,12 @@ const setupSectionsAnimation = ({
   about: HTMLElement;
   contentDescription: HTMLDivElement;
   contentServices: HTMLDivElement;
+  contentCertificates: HTMLDivElement;
   contentDetails: HTMLDivElement;
   contentProgressCount: HTMLDivElement;
   tlDescription: gsap.core.Timeline;
   tlServices: gsap.core.Timeline;
+  tlCertificates: gsap.core.Timeline;
   tlDetails: gsap.core.Timeline;
 }) => {
   sectionsMm = createMatchMedia((_context, { isLandscape }) => {
@@ -215,7 +225,8 @@ const setupSectionsAnimation = ({
       // Equal spacing between three animations: 0, 0.275, 0.55
       const DETAILS_DELAY = 0;
       const DESCRIPTION_DELAY = 0.4;
-      const SERVICES_DELAY = 0.8;
+      const SERVICES_DELAY = 0.72;
+      const CERTIFICATES_DELAY = 0.88;
 
       // Details animation (first, only on landscape)
       tl.fromTo(contentDetails, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power1.out" }, DETAILS_DELAY);
@@ -242,10 +253,22 @@ const setupSectionsAnimation = ({
       tl.add(() => {
         tlServices?.play();
       }, SERVICES_DELAY);
+
+      // Certificates animation
+      tl.fromTo(
+        contentCertificates,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.15, ease: "power1.out" },
+        CERTIFICATES_DELAY,
+      );
+      tl.add(() => {
+        tlCertificates?.play();
+      }, CERTIFICATES_DELAY);
     } else {
       // Mobile: only description and services (details hidden on portrait)
       const DESCRIPTION_DELAY = 0;
-      const SERVICES_DELAY = 0.6;
+      const SERVICES_DELAY = 0.55;
+      const CERTIFICATES_DELAY = 0.75;
 
       // Details animation disabled - BoxDetails is hidden on portrait
 
@@ -271,6 +294,17 @@ const setupSectionsAnimation = ({
       tl.add(() => {
         tlServices?.play();
       }, SERVICES_DELAY);
+
+      // Certificates animation
+      tl.fromTo(
+        contentCertificates,
+        { opacity: 0, y: "10vh" },
+        { opacity: 1, y: "0vh", duration: 0.15, ease: "power1.out" },
+        CERTIFICATES_DELAY,
+      );
+      tl.add(() => {
+        tlCertificates?.play();
+      }, CERTIFICATES_DELAY);
 
       // ProgressCount animation - fade in on portrait, never fade out
       tl.fromTo(

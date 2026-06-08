@@ -3,15 +3,18 @@ import { ref, watchEffect } from "vue";
 import { transitions } from "../../../animations";
 import BoxDescription from "./BoxDescription.vue";
 import BoxServices from "./BoxServices.vue";
+import BoxCertificates from "./BoxCertificates.vue";
 import BoxDetails from "./BoxDetails.vue";
 import ProgressCount from "./ProgressCount.vue";
 
 const contentDescriptionRef = ref<HTMLDivElement | null>(null);
 const contentServicesRef = ref<HTMLDivElement | null>(null);
+const contentCertificatesRef = ref<HTMLDivElement | null>(null);
 const contentDetailsRef = ref<HTMLDivElement | null>(null);
 const contentProgressCountRef = ref<HTMLDivElement | null>(null);
 const tlDescriptionRef = ref<gsap.core.Timeline | null>(null);
 const tlServicesRef = ref<gsap.core.Timeline | null>(null);
+const tlCertificatesRef = ref<gsap.core.Timeline | null>(null);
 const tlDetailsRef = ref<gsap.core.Timeline | null>(null);
 
 const props = defineProps<{
@@ -25,6 +28,8 @@ watchEffect((onInvalidate) => {
     contentDescriptionRef.value &&
     tlServicesRef.value &&
     contentServicesRef.value &&
+    tlCertificatesRef.value &&
+    contentCertificatesRef.value &&
     contentDetailsRef.value &&
     tlDetailsRef.value &&
     contentProgressCountRef.value
@@ -35,6 +40,8 @@ watchEffect((onInvalidate) => {
       tlDescription: tlDescriptionRef.value,
       contentServices: contentServicesRef.value,
       tlServices: tlServicesRef.value,
+      contentCertificates: contentCertificatesRef.value,
+      tlCertificates: tlCertificatesRef.value,
       contentDetails: contentDetailsRef.value,
       tlDetails: tlDetailsRef.value,
       contentProgressCount: contentProgressCountRef.value,
@@ -57,6 +64,9 @@ watchEffect((onInvalidate) => {
     </div>
     <div ref="contentServicesRef" class="about-services">
       <BoxServices @timeline:created="(tl: gsap.core.Timeline) => (tlServicesRef = tl)" />
+    </div>
+    <div ref="contentCertificatesRef" class="about-certificates">
+      <BoxCertificates @timeline:created="(tl: gsap.core.Timeline) => (tlCertificatesRef = tl)" />
     </div>
     <div ref="contentProgressCountRef" class="about-progress-count">
       <ProgressCount />
@@ -82,7 +92,8 @@ watchEffect((onInvalidate) => {
 
   &-details,
   &-description,
-  &-services {
+  &-services,
+  &-certificates {
     display: flex;
     justify-content: center;
     align-items: center;

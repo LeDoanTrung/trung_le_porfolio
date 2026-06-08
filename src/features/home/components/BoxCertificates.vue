@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect, onBeforeUnmount } from "vue";
+import { ref, watchEffect, onBeforeUnmount } from "vue";
 import gsap from "gsap";
-import { locale } from "../../../i18n/store";
 import { t } from "../../../i18n/utils/translate";
 import AppearingText from "../../../components/AppearingText.vue";
 import { BREAKPOINTS } from "../../../utils/sizes";
 import { Vector3 } from "three";
 import ProjectedElement from "../../../components/ProjectedElement.vue";
 
-const point = new Vector3(0.75, 2.75, 6.75);
+const point = new Vector3(1.15, 0.35, 6.75);
+
+const CERTIFICATES = [{ name: "ISTQB Foundation Level" }, { name: "IELTS 6.5" }] as const satisfies {
+  name: string;
+}[];
 
 const wrapperRef = ref<HTMLDivElement | null>(null);
 const timelines = ref<{ timeline: gsap.core.Timeline; delay: number }[]>([]);
-const subRefs = ref<HTMLParagraphElement[]>([]);
 let matchMedia: gsap.MatchMedia | null = null;
 
 const emit = defineEmits<{
@@ -43,16 +45,14 @@ watchEffect((onInvalidate) => {
         paused: true,
       });
 
-      // Only animate clipPath on desktop
       if (!isMobile) {
         tl.fromTo(
           wrapperEl,
           { clipPath: "inset(0% 100% 0% 0%)" },
-          { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "none" },
+          { clipPath: "inset(0% 0% 0% 0%)", duration: 0.35, ease: "none" },
           0,
         );
       } else {
-        // On mobile, ensure clipPath is set to visible immediately
         gsap.set(wrapperEl, { clipPath: "inset(0% 0% 0% 0%)" });
       }
 
@@ -61,26 +61,11 @@ watchEffect((onInvalidate) => {
         if (!item) continue;
         tl.add(() => {
           item.timeline.restart(true);
-        }, item.delay + 0.25);
-      }
-
-      // Only fade in on desktop
-      if (!isMobile && subRefs.value.length > 0) {
-        const subItems = subRefs.value.filter((ref) => ref !== null && ref !== undefined);
-        if (subItems.length > 0) {
-          tl.fromTo(subItems, { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.1 }, 0.3);
-        }
-      } else if (isMobile && subRefs.value.length > 0) {
-        // On mobile, ensure opacity is 1 immediately
-        const subItems = subRefs.value.filter((ref) => ref !== null && ref !== undefined);
-        if (subItems.length > 0) {
-          gsap.set(subItems, { opacity: 1 });
-        }
+        }, item.delay + 0.2);
       }
 
       emit("timeline:created", tl);
 
-      // Return cleanup function
       return () => {
         tl.kill();
       };
@@ -105,45 +90,25 @@ const handleTimelineCreated = (timeline: gsap.core.Timeline, delay: number) => {
   const updatedTimelines = [...timelines.value, { timeline, delay }];
   timelines.value = updatedTimelines;
 };
-
-const SERVICES_EN = [
-  { name: "Playwright & TypeScript" },
-  { name: "Selenium WebDriver" },
-  { name: "Robot Framework & Python" },
-  { name: "API Testing & Postman" },
-  { name: "Azure DevOps & CI/CD" },
-] as const satisfies { name: string }[];
-
-const SERVICES_VN = [
-  { name: "Playwright & TypeScript" },
-  { name: "Selenium WebDriver" },
-  { name: "Robot Framework & Python" },
-  { name: "API Testing & Postman" },
-  { name: "Azure DevOps & CI/CD" },
-] as const satisfies { name: string }[];
-
-const services = computed(() => {
-  return locale.value === "vn" ? SERVICES_VN : SERVICES_EN;
-});
 </script>
 
 <template>
   <ProjectedElement :point="point">
-    <div ref="wrapperRef" class="box-services">
-      <div class="box-services-content">
-        <div class="box-services-title">
+    <div ref="wrapperRef" class="box-certificates">
+      <div class="box-certificates-content">
+        <div class="box-certificates-title">
           <AppearingText
-            :text="t('services')"
+            :text="t('certificates')"
             :steps="1"
             :duration="0.35"
             @timeline:created="(tl: gsap.core.Timeline) => handleTimelineCreated(tl, 0)"
           />
         </div>
-        <div class="box-services-list">
-          <div class="box-services-list-item" v-for="(service, index) in services" :key="service.name">
-            <p class="box-services-list-item-name">
+        <div class="box-certificates-list">
+          <div class="box-certificates-list-item" v-for="(certificate, index) in CERTIFICATES" :key="certificate.name">
+            <p class="box-certificates-list-item-name">
               <AppearingText
-                :text="service.name"
+                :text="certificate.name"
                 :steps="1"
                 :duration="0.35"
                 @timeline:created="(tl: gsap.core.Timeline) => handleTimelineCreated(tl, 0.15 + index * 0.1)"
@@ -157,28 +122,28 @@ const services = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.box-services {
+.box-certificates {
   --line-length: min(48px, calc(var(--svw) * 5));
 
   position: absolute;
-  bottom: var(--count-height);
+  bottom: calc(var(--count-height) + 180px);
   width: calc(100% - var(--space-outer) * 2);
   left: var(--space-outer);
 
   @include mixins.landscape {
-    width: 480px;
-    max-width: calc(var(--svw) * 37);
+    width: 360px;
+    max-width: calc(var(--svw) * 30);
     padding-left: var(--line-length);
     position: relative;
     left: 0;
     bottom: 0;
     padding-top: 3px;
-    transform: translate(0, -50%);
+    transform: translate(0, -40%);
   }
 
   @include mixins.landscape-large {
-    width: 380px;
-    max-width: calc(var(--svw) * 36);
+    width: 340px;
+    max-width: calc(var(--svw) * 28);
   }
 
   &::after,
@@ -208,12 +173,9 @@ const services = computed(() => {
     top: 50%;
     transform: translateY(-50%);
     left: 0;
+    width: var(--line-length);
     height: 0;
     border-top: var(--stroke-sm) solid var(--color-cyan-400);
-
-    @include mixins.landscape {
-      width: var(--line-length);
-    }
   }
 
   &-content {
@@ -231,6 +193,19 @@ const services = computed(() => {
 
     @include mixins.mq("md") {
       padding: var(--space-sm) var(--space-md);
+    }
+  }
+
+  &-title {
+    font-size: var(--font-size-title-xs);
+    font-weight: 700;
+
+    @include mixins.landscape {
+      font-size: var(--font-size-title-xxs);
+    }
+
+    @include mixins.landscape-large {
+      font-size: var(--font-size-title-xs);
     }
   }
 
@@ -267,19 +242,6 @@ const services = computed(() => {
           font-size: var(--font-size-lg);
         }
       }
-    }
-  }
-
-  &-title {
-    font-size: var(--font-size-title-xs);
-    font-weight: 700;
-
-    @include mixins.landscape {
-      font-size: var(--font-size-title-xxs);
-    }
-
-    @include mixins.landscape-large {
-      font-size: var(--font-size-title-xs);
     }
   }
 }
