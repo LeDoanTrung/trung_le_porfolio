@@ -2,7 +2,8 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import glsl from "vite-plugin-glsl";
 
-export default defineConfig({
+export default defineConfig(() => ({
+  base: process.env.VITE_BASE_URL || "/",
   plugins: [
     vue(),
     glsl({
@@ -41,4 +42,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

@@ -6,6 +6,7 @@ import { isTransitioning } from "./useProjectTransition";
 // -----------------------------------------------------------------------------
 
 export const path = ref(typeof window !== "undefined" ? window.location.pathname : "/");
+const GH_PAGES_REDIRECT_KEY = "gh-pages-redirect-path";
 
 // -----------------------------------------------------------------------------
 // COMPUTED HELPERS
@@ -73,6 +74,18 @@ export function useRouteObserver() {
   };
   onMounted(() => {
     patchHistory();
+
+    if (typeof window !== "undefined") {
+      const basePath = import.meta.env.BASE_URL || "/";
+      const normalizedBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+      const savedPath = window.sessionStorage.getItem(GH_PAGES_REDIRECT_KEY);
+
+      if (savedPath && (window.location.pathname === normalizedBase || window.location.pathname === normalizedBase.slice(0, -1))) {
+        window.history.replaceState(null, "", savedPath);
+        window.sessionStorage.removeItem(GH_PAGES_REDIRECT_KEY);
+      }
+    }
+
     update();
 
     window.addEventListener("popstate", update);
