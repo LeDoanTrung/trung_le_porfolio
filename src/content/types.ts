@@ -24,6 +24,7 @@ export interface SkillContent {
 export interface ProjectPreview {
   title: string;
   slug: string;
+  repoUrl: string;
   thumbnail: string;
   description: string;
 }

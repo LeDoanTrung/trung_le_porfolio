@@ -1,47 +1,45 @@
-import thumbnailCubeWar from "../../../assets/thumbnails/cubewar.webp";
-import thumbnailQuibbo from "../../../assets/thumbnails/quibbo.webp";
-//import thumbnailParticles from "../../../assets/thumbnails/particles.webp";
-import thumbnailPokedex from "../../../assets/thumbnails/pokedex.webp";
-import thumbnailSharkie from "../../../assets/thumbnails/sharkie.webp";
-import thumbnailStreakon from "../../../assets/thumbnails/streakon.webp";
+import thumbnailPlaywright from "../../../assets/thumbnails/playwright-logo.png";
+import thumbnailAppium from "../../../assets/thumbnails/appium.png";
+import thumbnailSpecflow from "../../../assets/thumbnails/specflow.png";
+import thumbnailCypress from "../../../assets/thumbnails/cypress.jpg";
+import thumbnailRestSharp from "../../../assets/thumbnails/selenium-la-gi-1.jpg";
 
 import type { ProjectPreview } from "../../types";
 
 export default [
   {
-    title: "StreakOn",
-    slug: "streakon",
-    thumbnail: thumbnailStreakon,
+    title: "Playwright Demo Framework",
+    slug: "playwright-demo-framework",
+    repoUrl: "https://github.com/LeDoanTrung/Playwright_Demo_Framework",
+    thumbnail: thumbnailPlaywright,
     description: "App für tägliche Gewohnheiten",
   },
   {
-    title: "CubeWar",
-    slug: "cubewar",
-    thumbnail: thumbnailCubeWar,
+    title: "Appium Java Framework",
+    slug: "appium-java-framework",
+    repoUrl: "https://github.com/LeDoanTrung/Appium_Java_Framework",
+    thumbnail: thumbnailAppium,
     description: "Multiplayer-Strategiespiel",
   },
   {
-    title: "Quibbo",
-    slug: "quibbo",
-    thumbnail: thumbnailQuibbo,
+    title: "Selenium Specflow BDD Framework",
+    slug: "selenium-specflow-bdd-framework",
+    repoUrl: "https://github.com/LeDoanTrung/Selenium_Specflow_DemoQA",
+    thumbnail: thumbnailSpecflow,
     description: "Multiplayer-Gaming-Plattform",
   },
   {
-    title: "Sharkie",
-    slug: "sharkie",
-    thumbnail: thumbnailSharkie,
+    title: "Cypress Unsplash",
+    slug: "cypress-unsplash",
+    repoUrl: "https://github.com/LeDoanTrung/Cypress_Unsplash",
+    thumbnail: thumbnailCypress,
     description: "2D-Abenteuerspiel",
   },
-  /**  {
-    title: "WebGL Partikel",
-    slug: "particles",
-    thumbnail: thumbnailParticles,
-    description: "Dynamische 3D Partikel",
-  }, */
   {
-    title: "Pokédex",
-    slug: "pokedex",
-    thumbnail: thumbnailPokedex,
+    title: "Selenium RestSharp DemoQA",
+    slug: "selenium-restsharp-demoqa",
+    repoUrl: "https://github.com/LeDoanTrung/Selenium_RestSharp_DemoQA",
+    thumbnail: thumbnailRestSharp,
     description: "Open-Source Lernprojekt",
   },
 ] as const satisfies ProjectPreview[];

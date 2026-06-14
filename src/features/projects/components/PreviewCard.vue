@@ -7,7 +7,6 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ButtonRound from "../../../components/ButtonRound.vue";
 import { t } from "../../../i18n/utils/translate";
-import { social } from "../../../content/social";
 import Plus from "../../../components/icons/Plus.vue";
 
 import type { ProjectPreview } from "../../../content/types";
@@ -48,8 +47,9 @@ onUnmounted(() => {
 <template>
   <Link
     class="preview-card children-unclickable"
-    :to="`/project/${props.preview.slug}`"
-    :aria-label="t('switch-to-project', { project: props.preview.title })"
+    external
+    :href="props.preview.repoUrl"
+    :aria-label="`${t('go-to')} ${props.preview.title}`"
     data-cursor="arrow"
     data-sound="click"
     data-hoversound="hover"
@@ -85,14 +85,15 @@ onUnmounted(() => {
     data-cursor="arrow-external"
     data-hoversound="hover"
     external
-    :href="social[0].url"
+    href="https://github.com/LeDoanTrung/Selenium_Specflow_DemoQA"
   >
     <div class="preview-card-top preview-card-top-empty">
       <Plus class="preview-card-top-empty-icon" />
     </div>
     <div class="preview-card-content">
       <div class="preview-card-copys">
-        <h3 class="preview-card-title">{{ t("start-a-new-project") }}</h3>
+        <h3 class="preview-card-title">Selenium_Specflow_DemoQA</h3>
+        <p class="preview-card-description">Automation framework</p>
       </div>
     </div>
   </Link>
