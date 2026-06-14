@@ -51,11 +51,13 @@ Replace it with the production domain used for the portfolio.
 
 ### GitHub Pages
 
-This repository is configured for GitHub Pages deployment through GitHub Actions.
+This repository is configured for GitHub Pages deployment through a `gh-pages` branch published by GitHub Actions.
 
 - The build base is taken from `VITE_BASE_URL` in the workflow.
 - The site URL used in metadata comes from `VITE_SITE_URL`.
 - Deep links such as `/project/<slug>` are preserved via `public/404.html` and `src/composables/useRouteObserver.ts`.
+
+After the first successful deploy, set `Settings` -> `Pages` -> `Build and deployment` -> `Source` to `Deploy from a branch`, then select the `gh-pages` branch and `/ (root)`.
 
 If you want to use a custom domain later, set `VITE_BASE_URL=/` and update the metadata URLs in `index.html`.
 
