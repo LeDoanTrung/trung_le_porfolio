@@ -99,7 +99,7 @@ const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
             >
           </Clickable>
         </div>
-        <p>© {{ new Date().getFullYear() }} David Heckhoff</p>
+        <p>© {{ new Date().getFullYear() }} Trung Le</p>
       </div>
     </div>
   </footer>

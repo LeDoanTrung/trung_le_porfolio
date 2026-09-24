@@ -142,10 +142,8 @@ onUnmounted(() => {
     <div class="grid experience-grid">
       <div ref="titleRef" class="experience-header">
         <p class="experience-kicker">{{ t("experience") }}</p>
-        <h2 class="experience-title">Career timeline</h2>
-        <p class="experience-copy">
-          Automation Test Engineer roles focused on scalable test frameworks, API validation, accessibility, and CI/CD delivery.
-        </p>
+        <h2 class="experience-title">{{ t("career-timeline") }}</h2>
+        <p class="experience-copy">{{ t("career-timeline-intro") }}</p>
 
         <div class="experience-quick-nav">
           <button
@@ -175,9 +173,9 @@ onUnmounted(() => {
           </div>
 
           <div class="experience-card-meta">
-            <p><span>Project:</span> {{ entry.project }}</p>
-            <p><span>Client:</span> {{ entry.client }}</p>
-            <p><span>Domain:</span> {{ entry.domain }}</p>
+            <p><span>{{ t("project") }}:</span> {{ entry.project }}</p>
+            <p><span>{{ t("client") }}:</span> {{ entry.client }}</p>
+            <p><span>{{ t("domain") }}:</span> {{ entry.domain }}</p>
           </div>
 
           <div class="experience-card-tech">
@@ -209,26 +207,25 @@ onUnmounted(() => {
   }
 
   &-grid {
-    display: grid;
-    gap: var(--space-xxl);
     align-items: start;
+    row-gap: var(--space-xxl);
 
     @include mixins.mq("lg") {
-      grid-template-columns: 0.9fr 1.6fr;
-      gap: var(--space-xxxl);
+      row-gap: var(--space-xxxl);
     }
   }
 
   &-header {
+    grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
     max-width: 540px;
-    position: sticky;
-    top: 96px;
     align-self: start;
 
     @include mixins.mq("lg") {
+      grid-column: 1 / span 5;
+      position: sticky;
       top: 128px;
     }
   }
@@ -293,12 +290,14 @@ onUnmounted(() => {
   }
 
   &-timeline {
+    grid-column: 1 / -1;
     position: relative;
     display: grid;
     gap: var(--space-lg);
     padding-left: 16px;
 
     @include mixins.mq("lg") {
+      grid-column: 6 / -1;
       padding-left: 34px;
     }
 
@@ -315,8 +314,13 @@ onUnmounted(() => {
 
   &-card {
     position: relative;
-    padding: 28px 28px 24px;
+    padding: 20px 18px 18px;
     border-radius: var(--radius-xl);
+    overflow-wrap: anywhere;
+
+    @include mixins.mq("md") {
+      padding: 28px 28px 24px;
+    }
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.5)),
       var(--color-beige-400);
