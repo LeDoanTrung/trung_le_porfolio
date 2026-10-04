@@ -29,10 +29,14 @@ const EXPERIENCE_EN: ExperienceEntry[] = [
     domain: "Government / Customs & Trade – Online Customs Declaration Support Platform",
     technologies: ["Playwright + TypeScript", "Postman", "Azure DevOps", "GitHub Copilot"],
     responsibilities: [
-      "Designed and implemented a scalable Playwright + TypeScript automation framework for end-to-end testing.",
-      "Created test design, scenarios, and detailed test cases from functional requirements and workflows.",
-      "Collaborated with BAs and developers to align test coverage with business and regulatory needs.",
-      "Executed manual, automated, API, accessibility, and AI chatbot testing; maintained a focused regression suite.",
+      "Designed and built a scalable, maintainable test automation framework using Playwright and TypeScript, covering UI functional, API, and accessibility testing in a single solution.",
+      "Automated end-to-end UI functional tests for complex customs declaration workflows, ensuring business and regulatory rules are validated across the full user journey.",
+      "Developed automated API tests with Playwright to verify service integrations, request/response contracts, and data accuracy, using Postman for API exploration and debugging.",
+      "Implemented automated accessibility checks to support compliance with GOV.UK accessibility standards (WCAG).",
+      "Integrated automated test suites into Azure DevOps CI/CD pipelines, providing fast and reliable feedback on every build and deployment.",
+      "Maintained a focused, risk-based regression suite and continuously improved test stability and execution time.",
+      "Derived test scenarios and test cases from functional requirements and business workflows, collaborating closely with BAs and developers to align coverage with business and regulatory needs.",
+      "Complemented automation with manual exploratory testing and AI chatbot testing, and leveraged GitHub Copilot to accelerate test development.",
     ],
   },
   {
@@ -62,10 +66,14 @@ const EXPERIENCE_VN: ExperienceEntry[] = [
     domain: "Chính phủ / Hải quan & Thương mại – Nền tảng hỗ trợ khai báo hải quan trực tuyến",
     technologies: ["Playwright + TypeScript", "Postman", "Azure DevOps", "GitHub Copilot"],
     responsibilities: [
-      "Thiết kế và xây dựng framework automation với Playwright + TypeScript cho end-to-end testing.",
-      "Tạo test design, test scenarios và test cases chi tiết từ yêu cầu chức năng và luồng nghiệp vụ.",
-      "Phối hợp với BA và Developer để đảm bảo test coverage phù hợp với yêu cầu nghiệp vụ và quy định.",
-      "Thực hiện manual, automation, API, accessibility và AI chatbot testing; duy trì bộ regression tập trung.",
+      "Thiết kế và xây dựng framework test automation có khả năng mở rộng và dễ bảo trì bằng Playwright và TypeScript, bao phủ UI functional, API và accessibility testing trong cùng một giải pháp.",
+      "Tự động hóa end-to-end UI functional test cho các luồng khai báo hải quan phức tạp, đảm bảo các quy tắc nghiệp vụ và quy định được kiểm chứng xuyên suốt hành trình người dùng.",
+      "Phát triển automated API test với Playwright để kiểm chứng tích hợp dịch vụ, request/response contract và tính chính xác của dữ liệu; dùng Postman để khám phá và debug API.",
+      "Triển khai kiểm tra accessibility tự động nhằm đáp ứng tiêu chuẩn accessibility của GOV.UK (WCAG).",
+      "Tích hợp bộ test tự động vào CI/CD pipeline trên Azure DevOps, cung cấp phản hồi nhanh và ổn định cho mỗi lần build và deploy.",
+      "Duy trì bộ regression tập trung theo rủi ro, liên tục cải thiện độ ổn định và thời gian thực thi của test.",
+      "Xây dựng test scenario và test case từ yêu cầu chức năng và luồng nghiệp vụ, phối hợp chặt chẽ với BA và Developer để coverage bám sát yêu cầu nghiệp vụ và quy định.",
+      "Bổ sung manual exploratory testing và AI chatbot testing bên cạnh automation, đồng thời tận dụng GitHub Copilot để tăng tốc quá trình phát triển test.",
     ],
   },
   {
@@ -89,6 +97,7 @@ const entries = computed(() => (locale.value === "vn" ? EXPERIENCE_VN : EXPERIEN
 const quickNavItems = computed(() => [
   { label: t("about"), target: "#about" },
   { label: t("experience"), target: "#experience" },
+  { label: t("certificates"), target: "#certificates" },
   { label: t("projects"), target: "#projects" },
   { label: t("contact"), target: "#contact" },
 ]);
@@ -217,6 +226,9 @@ onUnmounted(() => {
 
   &-header {
     grid-column: 1 / -1;
+    // Without this, a card's min-content width inflates the 12 shared grid
+    // tracks and the section scrolls sideways on narrow screens.
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
@@ -291,6 +303,7 @@ onUnmounted(() => {
 
   &-timeline {
     grid-column: 1 / -1;
+    min-width: 0;
     position: relative;
     display: grid;
     gap: var(--space-lg);

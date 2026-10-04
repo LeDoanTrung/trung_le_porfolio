@@ -23,12 +23,17 @@ const props = defineProps<{
   background: none;
   transition: color 0.1s ease-in-out;
   font-size: var(--font-size-md);
-  width: 128px;
+  // Width follows the label so the nav fits every language.
+  width: auto;
   white-space: nowrap;
   text-transform: uppercase;
   z-index: 2;
   border-radius: 100px;
-  padding: var(--space-xxs) 0;
+  padding: var(--space-xxs) 18px;
+
+  @include mixins.mq("xl") {
+    padding: var(--space-xxs) 22px;
+  }
 
   &::after {
     content: "";

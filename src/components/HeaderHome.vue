@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import HeaderLink from "./HeaderLink.vue";
-import { onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { t } from "../i18n/utils/translate";
+import { translations } from "../i18n/store";
 import { lenis } from "../composables/useScroll";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useHeaderTheme } from "../composables/useHeaderTheme";
@@ -12,32 +13,49 @@ const handleLinkClick = (link: string) => {
   lenis.value.scrollTo(link);
 };
 
-type ActiveLink = "about" | "experience" | "projects" | "contact";
+type ActiveLink = "about" | "experience" | "certificates" | "projects" | "contact";
 const activeLink = ref<ActiveLink | null>(null);
-const sections: ActiveLink[] = ["about", "experience", "projects", "contact"];
-const ariaLabels = {
+const sections: ActiveLink[] = ["about", "experience", "certificates", "projects", "contact"];
+const ariaLabels = computed<Record<ActiveLink, string>>(() => ({
   about: t("about"),
   experience: t("experience"),
+  certificates: t("certificates"),
   projects: t("projects"),
   contact: t("contact"),
-};
+}));
 
 const isMounted = ref(false);
 
-const barStyle = ref({ transform: "" });
-const ITEM_WIDTH = 128;
+const barStyle = ref({ transform: "", width: "0px" });
+const linkElements = ref<HTMLElement[]>([]);
+
+const setLinkRef = (el: unknown, index: number) => {
+  const element = (el as { $el?: HTMLElement } | HTMLElement | null) ?? null;
+  const node = element && "$el" in element ? element.$el : (element as HTMLElement | null);
+  if (node) linkElements.value[index] = node;
+};
 
 const { isDarkTheme, hasScrolledIntoView } = useHeaderTheme();
 
+// Labels differ in length per language, so the pill is measured from the DOM
+// rather than assuming a fixed item width.
 const updateBarPosition = () => {
   const index = sections.indexOf(activeLink.value as ActiveLink);
-  const left = index * ITEM_WIDTH;
+  const element = linkElements.value[index];
+  if (!element) return;
+
   barStyle.value = {
-    transform: `translateX(${left}px)`,
+    transform: `translateX(${element.offsetLeft}px)`,
+    width: `${element.offsetWidth}px`,
   };
 };
 
+watch(translations, () => nextTick(updateBarPosition));
+
 onMounted(() => {
+  window.addEventListener("resize", updateBarPosition);
+  document.fonts?.ready.then(() => updateBarPosition());
+
   sections.forEach((section) => {
     ScrollTrigger.create({
       trigger: `#${section}`,
@@ -60,6 +78,10 @@ onMounted(() => {
 
   isMounted.value = true;
 });
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateBarPosition);
+});
 </script>
 
 <template>
@@ -73,8 +95,9 @@ onMounted(() => {
         :style="barStyle"
       ></div>
       <HeaderLink
-        v-for="section in sections"
+        v-for="(section, index) in sections"
         :key="section"
+        :ref="(el) => setLinkRef(el, index)"
         :is-active="activeLink === section"
         :class="[
           'header-home-link',
@@ -141,13 +164,13 @@ onMounted(() => {
   &-bar {
     position: absolute;
     top: 3px;
-    left: 3px;
+    left: 0;
     height: calc(100% - 6px);
-    width: 128px;
     background: var(--color-orange-400);
     border-radius: 100px;
     transition:
       transform 0.3s var(--ease-smooth),
+      width 0.3s var(--ease-smooth),
       opacity 0.1s ease-in-out,
       background-color 0.1s ease-in-out;
     z-index: 1;
@@ -171,7 +194,6 @@ onMounted(() => {
     background: none;
     transition: color 0.1s ease-in-out;
     font-size: var(--font-size-md);
-    width: 128px;
     white-space: nowrap;
     text-transform: uppercase;
 

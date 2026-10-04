@@ -9,7 +9,11 @@ import ProjectedElement from "../../../components/ProjectedElement.vue";
 
 const point = new Vector3(1.15, 0.35, 6.75);
 
-const CERTIFICATES = [{ name: "ISTQB Foundation Level" }, { name: "IELTS 6.5" }] as const satisfies {
+const CERTIFICATES = [
+  { name: "ISTQB CTAL - Test Automation Engineering" },
+  { name: "ISTQB Foundation Level" },
+  { name: "IELTS 6.5" },
+] as const satisfies {
   name: string;
 }[];
 
