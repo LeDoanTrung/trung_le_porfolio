@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=/" />
+    <script>
+      (function () {
+        var path = location.pathname + location.search + location.hash;
+        try {
+          sessionStorage.setItem('gh-pages-redirect-path', path);
+        } catch (e) {}
+
+        var base = location.pathname.replace(/\/404\.html$/, '/');
+        location.replace(base);
+      })();
+    </script>
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
